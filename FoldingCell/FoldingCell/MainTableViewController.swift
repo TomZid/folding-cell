@@ -23,6 +23,71 @@
 
 import UIKit
 
+enum Direction {
+    case North, South, East, West
+}
+
+// 可以很容易地切换枚举值
+extension Direction: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .North: return "↑"
+        case .South: return "↓"
+        case .East:  return "→"
+        case .West:  return "←"
+        }
+    }
+}
+
+extension Media {
+    var isFromJulesVerne: Bool {
+        switch self {
+        case .Book(title: _, author: "Jules Verne", year: _): return true
+        case .Movie(title: _, director: "Jules Verne", year: _): return true
+        default: return false
+        }
+    }
+}
+
+/// Media
+///
+/// - Book: Book
+/// - Movie: Movie
+/// - WebSite: WebSite
+enum Media {
+    case Book(title: String ,author: String ,year: String)
+    case Movie(title: String ,director: String ,year: String)
+    case WebSite(url: String)
+}
+
+extension Media {
+    var mediaTitle :String {
+        switch self {
+        case Media.Book(let title, let author, let year):
+            return "This is a Book title is \(title) author is \(author) year is \(year)"
+        case .Movie(let title, let director, let year) :
+            return "This is a Movie title is \(title) director is \(director) year is \(year)"
+        case .WebSite(let url) :
+            return "This is a WebSite Url is \(url)"
+        default:
+            return "Error"
+        }
+    }
+}
+
+/// Person
+struct Person {
+    let name: String
+}
+
+
+func ~= (pattern: String, value: Person) -> Bool {
+    return value.name == pattern
+}
+
+let p = Person(name: "zidane")
+
+/// MainTableViewController
 class MainTableViewController: UITableViewController {
     
     let kCloseCellHeight: CGFloat = 179
@@ -36,7 +101,55 @@ class MainTableViewController: UITableViewController {
         super.viewDidLoad()
         
         createCellHeightsArray()
+        uiconfig()
         self.tableView.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
+    }
+    
+    func uiconfig() {
+        switch p {
+        case "zidane" :
+            print("It is me")
+        default :
+            print("It is not me")
+        }
+        
+        print("\"tom\" ~= p == \("tom" ~= p)")
+        
+        var res = "tom" ~= p
+        
+        print("res == \(res)")
+        
+        let m = Media.Book(title: "hamoleite", author: "shasibiya", year: "1787")
+        if case Media.Book(let title, let author, let year) = m {
+            
+        }else {
+            
+        }
+        
+        if case let Media.Book(title: title, author: author, year: year) = m {
+            
+        }else {
+            
+        }
+        
+        if case let .Book(title: aTitle, author: anAuthor, year: aYear) = m{
+            
+        }else {
+            
+        }
+        
+        switch m {
+        case Media.Book(_, _, _):
+            print("this is a book");
+        default:
+            print("this is not a book");
+        }
+        
+        let mT = m.mediaTitle
+        print("mT = \(mT)")
+        
+        res = m.isFromJulesVerne
+        print("res == \(res)")
     }
     
     // MARK: configure
