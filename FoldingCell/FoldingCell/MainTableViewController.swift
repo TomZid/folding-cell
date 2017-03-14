@@ -104,6 +104,7 @@ enum Media {
     case Book(title: String ,author: String ,year: String)
     case Movie(title: String ,director: String ,year: String)
     case WebSite(url: String)
+    case Star(name: String, birthday: Int)
 }
 
 extension Media {
@@ -196,6 +197,17 @@ class MainTableViewController: UITableViewController {
         
         res = m.isFromJulesVerne
         print("res == \(res)")
+        
+        let man = Media.Star(name: "zidane", birthday: 1978)
+        
+        /// 错误的where clause
+        /*
+        if case let Media.Star(name: _, birthday: year) where year > 2000 = man {
+            
+        }else {
+            
+        }
+ */
     }
     
     // MARK: configure
