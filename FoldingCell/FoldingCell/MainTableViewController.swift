@@ -21,6 +21,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+/*
+ * http://swift.gg/2016/04/26/pattern-matching-1/ ///< 模式匹配第一弹: switch, enums & where 子句
+ **/
+
 import UIKit
 
 enum Direction {
@@ -45,6 +49,48 @@ extension Media {
         case .Book(title: _, author: "Jules Verne", year: _): return true
         case .Movie(title: _, director: "Jules Verne", year: _): return true
         default: return false
+        }
+    }
+}
+
+
+// MARK: - 一次绑定多种模式///<  尝试绑定相同名字和类型的变量时，这仍然是有意义的工作
+extension Media {
+    var mediaTitle2 :String {
+        switch self {
+        case let .Book(title: aTitle, author: _, year: _), let .Movie(title: aTitle, director: _, year: _) :
+            return aTitle
+        default:
+            return ""
+        }
+    }
+}
+
+
+// MARK: - 使用没有参数标签的元组
+extension Media {
+    var mediaTitle3 :String {
+        switch self {
+        case let .Book(tuple):
+            return tuple.title
+        default:
+            return ""
+        }
+    }
+}
+
+// MARK: - 作为附加的奖励，可以不用指定特定的元组来匹配任何关联值，所以下面三个表达式是相等的
+extension Media {
+    var mediaTitle4 :String {
+        switch self {
+        case .Book(_):
+            return "matching a single tuple of associated values that we don't care about"
+        case .Movie(_, _, _) :
+            return "matching individual associated values that we don't care about either"
+        case .WebSite(_) :
+            return "not specifying the tuple at all"
+        default:
+            return "ERROR"
         }
     }
 }
@@ -126,7 +172,7 @@ class MainTableViewController: UITableViewController {
             
         }
         
-        if case let Media.Book(title: title, author: author, year: year) = m {
+        if case let Media.Book(title, author, year) = m {
             
         }else {
             
