@@ -201,13 +201,14 @@ class MainTableViewController: UITableViewController {
         let man = Media.Star(name: "zidane", birthday: 1978)
         
         /// 错误的where clause
-        /*
-        if case let Media.Star(name: _, birthday: year) where year > 2000 = man {
-            
-        }else {
+//        if case let Media.Star(name: _, birthday: year) where year > 2000 = man {
+//            
+//        }else {
+//            
+//        }
+        if case let Media.Star(name: _, birthday: year) = man , year > 2000 {
             
         }
- */
     }
     
     // MARK: configure
